@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="content-section">
+    <form method="POST" action="/display">
+        {{ form.hidden_tag() }}
+            <div class="form-group">
+                {{ form.target_name.label }}
+                {{ form.target_name }}
+                <br>
+                <br>
+                <p>Input date in Y-m-d format</p>
+                {{ form.date_observed.label }}
+                {{ form.date_observed }}
+                <br>
+                <br>
+                {{ form.mjd_min.label }}
+                {{ form.mjd_min}}
+                <br>
+                <br>
+                {{ form.mjd_max.label }}
+                {{ form.mjd_max}}
+                <br>
+                <br>
+                {{ form.ra.label }}
+                {{ form.ra }}
+                <br>
+                <br>
+                {{ form.dec.label }}
+                {{ form.dec }}
+                <br>
+                <br>
+                
+            </div>
+
+            {% for attribute in dict_for_checkboxes %}
+                <p>{{form[attribute] }}</p>
+            {% endfor %}
+
+            <div class="form-group">
+                {{ form.query(class="btn btn-outline-info") }}
+            </div>
+    </form>
+</div>
+{% endblock content %}

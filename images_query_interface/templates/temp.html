@@ -1,0 +1,24 @@
+<table>
+    <thead>
+      <tr>
+        <th>Image Attribute</th>
+        <th>Value</th>
+      </tr>
+    </thead>
+    
+    {% for image in list_images %}
+      {% for attribute in list_attributes %}
+      <tbody>
+        <tr>
+          <th>{{attribute}}</th>
+          <td>{{ image[attribute] }}</td>
+        </tr>
+
+      </tbody>
+      
+      {% endfor %}
+      
+    {% endfor %}
+
+    
+  </table>
