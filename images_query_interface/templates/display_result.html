@@ -1,29 +1,18 @@
 {% extends "layout.html" %}
 
 {% block content %}
+<h3>Results</h3>
 
-<table>
-    <thead>
-      <tr>
-        <th>Image Attribute</th>
-        <th>Value</th>
-      </tr>
-    </thead>
-    {% for image in list_images %}
-      {% for attribute in list_attributes %}
-      <tbody>
-        <tr>
-          <th>{{attribute}}</th>
-          <td>{{ image[attribute] }}</td>
-        </tr>
+<p>{{n_matches}} results in {{ "%.6f"|format(execution_time) }}seconds </p>
 
-      </tbody>
-      
-      {% endfor %}
-      
-    {% endfor %}
 
-    
-  </table>
+{% from 'macros.html' import query_summary %}
+<p>Your Query</p>
+{{ query_summary(dict_query, form_attributes, dict_attributes) }}
+
+{% from 'macros.html' import table %}
+{{ table(list_attributes, dict_attributes, list_images, str_list_filepaths) }}
+
 
 {% endblock content %}
+

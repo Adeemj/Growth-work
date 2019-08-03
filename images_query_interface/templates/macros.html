@@ -1,0 +1,73 @@
+{% macro table(list_attributes, dict_attributes, list_images, str_list_filepaths) %}
+
+    <table class="sortable">
+
+        <thead>
+        <tr>
+            {% for attribute in list_attributes %}
+            <th>{{dict_attributes[attribute]}}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for image in list_images %}
+            <tr>
+            {% for attribute in list_attributes %}
+                {% if image[attribute] is number %}
+                
+                {% if attribute=='jd' %}
+                    <td>{{ "%.6f"|format(image[attribute]) }}</td>
+                {% else %}
+                    <td>{{ "%.2f"|format(image[attribute]) }}</td>
+                {% endif %}
+                
+                {% elif attribute=='date_observed' %}
+                <td>{{ (image[attribute]|string)[:-3] }}</td>
+                {% else %}
+                <td>{{ image[attribute] }}</td>
+                {% endif %}
+            {% endfor %}
+            <td><a href="{{ url_for('images.download_file', filepath = (image.filepath).replace('/','*') ) }}">Download</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    
+    </table>
+    <a href="{{ url_for('images.download_zip', str_list_filepaths = str_list_filepaths) }}">Download all files as zip</a>
+
+
+{% endmacro %}
+
+{% macro query_summary(dict_query, form_attributes, dict_attributes) %}
+
+
+{% for attribute in form_attributes['String Valued'] %}
+    {% if attribute in dict_query.keys() %}
+        <p>{{ dict_attributes[attribute] }} : {{ dict_query[attribute] }}</p>
+    {% endif %}
+{% endfor %}
+
+{% for attribute in form_attributes['Real Valued'] %}
+    {% if attribute in dict_query.keys() %}
+    
+        {% if ('max' in  (dict_query[attribute]).keys())
+         and ('min' in  (dict_query[attribute]).keys()) %}
+            <p>{{ dict_query[attribute]['min'] }} 
+                <= {{ dict_attributes[attribute] }} <= {{ dict_query[attribute]['max'] }}</p>
+        {% elif 'max' in  (dict_query[attribute]).keys() %}
+            <p>{{ dict_attributes[attribute] }} <= {{ dict_query[attribute]['max'] }}</p>
+        {% else %}
+            <p>{{ dict_query[attribute]['min'] }} <= {{ dict_attributes[attribute] }}</p>
+        {% endif %}
+    {% endif %}
+{% endfor %}
+
+{% if 'ra' in dict_query.keys() %}
+    <p>RA : {{dict_query['ra']}}</p>
+    <p>DEC : {{dict_query['dec']}}</p>
+{% endif %}
+
+
+{% endmacro %}
+

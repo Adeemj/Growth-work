@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block content %}
+    <p>{{ current_user.username }}</p>
+
+
+{% from 'macros.html' import query_summary %}
+
+{% for dict_query in list_hist|reverse %}
+
+    {{ query_summary(dict_query, form_attributes, dict_attributes) }}
+    <a href="{{ url_for('users.history', str_dict_query = dict_query|string ) }}">View Query</a>
+    <br>
+    
+{% endfor %}
+
+{% endblock content %}

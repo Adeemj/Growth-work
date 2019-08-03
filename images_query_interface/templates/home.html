@@ -1,7 +1,18 @@
 {% extends "layout.html" %}
 {% block content %}
-	{% for post in posts %}
-		<h1>{{post['title']}}</h1>
-		<p> By {{post['author']}} on {{post['date_posted']}}</p>
-	{% endfor %}
+
+<h3>Growth India</h3>
+<a href="{{ url_for('images.query') }}">Query</a>
+<br>
+<br>
+
+<form method="POST" action="/nightly_page">
+    {{ form.hidden_tag() }}
+        <div class="form-group">
+            {{ form.date.label }}
+            {{ form.date }}
+            {{ form.submit(class="btn btn-outline-info") }}
+        </div>
+</form>    
+
 {% endblock %}

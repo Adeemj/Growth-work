@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h3>Register</h3>
+<div class="content-section">
+    <form method="POST" >
+        {{ form.hidden_tag() }}
+            <div class="form-group">
+                {{ form.username.label }}
+                {{ form.username }}
+                <br>
+                <br>
+                {{ form.email.label }}
+                {{ form.email }}
+                <br>
+                <br>
+                {{ form.password.label }}
+                {{ form.password }}
+                <br>
+                <br>
+                {{ form.confirm_password.label }}
+                {{ form.confirm_password }}
+                <br>
+                <br>
+                
+            </div>
+
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+    </form>
+</div>
+
+{% endblock content %}

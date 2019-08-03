@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h3>Nightly Page for {{date}}</h3>
+
+{% for key,value in dict_times.items() %}
+    <p>{{key}} : {{(value['utc'].time()|string)[:-3]}}(utc)  {{(value['ist'].time()|string)[:-3]}}(ist)</p>
+{% endfor %}
+
+<p>Start of first science image : {{ (obs_start_time['utc'].time()|string)[:-3]  }}(utc)
+   {{ (obs_start_time['ist'].time()|string)[:-3] }}(ist)</p>
+<p>End of last science image : {{ (obs_end_time['utc'].time()|string)[:-3] }}(utc)
+   {{ (obs_end_time['ist'].time()|string)[:-3] }}(ist)</p>
+
+<p>Science observation fraction = {{ "%.3f"|format(sc_obs_frac) }}</p>
+<p>Science duty cycle = {{ "%.3f"|format(sc_duty_cycle) }}</p>
+
+<img src = "{{ url_for('nightly.plt_altVSfwhm_png', str_list_filepaths=str_list_filepaths) }}" alt="Alt vs FWHM">
+
+<h4>Summary of observation</h4>
+<table class="sortable">
+
+        <thead>
+        <tr>
+            <th>Target</th>
+            <th>Filters</th>
+        </tr>
+        </thead>
+
+        <tbody>
+            {% for target in dict_targets.keys() %}
+            <tr>
+                <td>{{ target }}</td>
+                <td>{{ (dict_targets[target]|string)[1:-1] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    
+    </table>
+
+{% from 'macros.html' import table %}
+{{ table(list_attributes, dict_attributes, list_images, str_list_filepaths) }}
+    
+<br>
+
+
+
+{% endblock %}
